@@ -1,10 +1,10 @@
 package com.luckylau.easy.dynamic.tp.core.thread;
 
 import com.luckylau.easy.dynamic.tp.common.VariableLinkedBlockingQueue;
+import com.luckylau.easy.dynamic.tp.common.event.RefreshEvent;
 import com.luckylau.easy.dynamic.tp.common.model.DtpDesc;
 import com.luckylau.easy.dynamic.tp.common.model.DtpQueue;
 import com.luckylau.easy.dynamic.tp.core.DtpRegistry;
-import com.luckylau.easy.dynamic.tp.core.event.RefreshEvent;
 import com.luckylau.easy.dynamic.tp.core.thread.queue.QueueHandler;
 import com.luckylau.easy.dynamic.tp.core.thread.reject.RejectHandler;
 import lombok.extern.slf4j.Slf4j;
