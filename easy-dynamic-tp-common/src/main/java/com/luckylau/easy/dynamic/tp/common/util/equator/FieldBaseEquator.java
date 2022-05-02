@@ -1,4 +1,4 @@
-package com.luckylau.easy.dynamic.tp.common.util;
+package com.luckylau.easy.dynamic.tp.common.util.equator;
 
 import java.lang.reflect.Field;
 import java.util.*;

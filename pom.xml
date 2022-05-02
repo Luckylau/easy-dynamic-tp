@@ -30,6 +30,7 @@
         <guava.version>31.0.1-jre</guava.version>
         <jackson-core.version>2.13.2</jackson-core.version>
         <jackson-databind.version>2.13.2</jackson-databind.version>
+        <slf4j.version>1.7.32</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -65,6 +66,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.luckylau</groupId>
+                <artifactId>easy-dynamic-tp-common</artifactId>
+                <version>${dtp.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson-databind.version}</version>
@@ -77,9 +84,21 @@
             </dependency>
 
             <dependency>
+                <groupId>com.luckylau</groupId>
+                <artifactId>easy-dynamic-tp-container</artifactId>
+                <version>${dtp.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>

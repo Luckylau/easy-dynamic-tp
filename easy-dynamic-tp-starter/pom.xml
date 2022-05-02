@@ -26,6 +26,11 @@
             <groupId>com.luckylau</groupId>
             <artifactId>easy-dynamic-tp-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.luckylau</groupId>
+            <artifactId>easy-dynamic-tp-container</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

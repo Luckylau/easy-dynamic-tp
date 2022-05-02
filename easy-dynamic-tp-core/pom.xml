@@ -21,11 +21,6 @@
 
     <dependency>
       <groupId>com.luckylau</groupId>
-      <artifactId>easy-dynamic-tp-logging</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.luckylau</groupId>
       <artifactId>easy-dynamic-tp-common</artifactId>
     </dependency>
 

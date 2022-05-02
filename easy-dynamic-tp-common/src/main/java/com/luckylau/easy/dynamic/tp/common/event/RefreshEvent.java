@@ -1,4 +1,4 @@
-package com.luckylau.easy.dynamic.tp.core.event;
+package com.luckylau.easy.dynamic.tp.common.event;
 
 import com.luckylau.easy.dynamic.tp.common.config.DtpChangeConfig;
 import org.springframework.context.ApplicationEvent;
