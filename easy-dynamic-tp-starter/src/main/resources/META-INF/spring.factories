@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.luckylau.easy.dynamic.tp.autoconfigure.BaseBeanAutoConfiguration,\
+  com.luckylau.easy.dynamic.tp.autoconfigure.WebServerTpAutoConfiguration

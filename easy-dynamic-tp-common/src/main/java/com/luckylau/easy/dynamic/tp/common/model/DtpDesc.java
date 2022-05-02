@@ -1,9 +1,7 @@
-package com.luckylau.easy.dynamic.tp.core.model;
+package com.luckylau.easy.dynamic.tp.common.model;
 
 import lombok.Data;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,7 +37,11 @@ public class DtpDesc {
      */
     private TimeUnit unit;
 
-    private BlockingQueue<Runnable> workQueue;
+    private DtpQueue dtpQueue;
 
-    private RejectedExecutionHandler handler;
+    private String rejectedHandlerType;
+
+    public long getKeepAliveTime(TimeUnit unit) {
+        return unit.convert(keepAliveTime, TimeUnit.NANOSECONDS);
+    }
 }
