@@ -1,4 +1,4 @@
-package com.luckylau;
+package com.luckylau.easy.dynamic.tp.common;
 
 /**
  * Hello world!
