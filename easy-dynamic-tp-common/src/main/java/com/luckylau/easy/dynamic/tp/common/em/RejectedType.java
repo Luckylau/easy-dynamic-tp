@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2022/5/2
  */
 @Slf4j
-public enum RejectedTypeEnum {
+public enum RejectedType {
     /**
      * RejectedExecutionHandler type while triggering reject policy.
      */
@@ -21,7 +21,7 @@ public enum RejectedTypeEnum {
 
     private final String name;
 
-    RejectedTypeEnum(String name) {
+    RejectedType(String name) {
         this.name = name;
     }
 

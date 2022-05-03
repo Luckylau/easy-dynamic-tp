@@ -13,7 +13,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import java.util.Objects;
 import java.util.concurrent.*;
 
-import static com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum.VARIABLE_LINKED_BLOCKING_QUEUE;
+import static com.luckylau.easy.dynamic.tp.common.em.QueueType.VARIABLE_LINKED_BLOCKING_QUEUE;
 
 /**
  * @Author luckylau
@@ -75,14 +75,14 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
         DtpQueue oldQueue = this.dtpDesc.getDtpQueue();
         DtpQueue newQueue = dtpDesc.getDtpQueue();
         if (!Objects.equals(oldQueue.getCapacity(), newQueue.getCapacity()) &&
-                oldQueue.getQueueTypeEnum() == VARIABLE_LINKED_BLOCKING_QUEUE) {
+                oldQueue.getQueueType() == VARIABLE_LINKED_BLOCKING_QUEUE) {
             BlockingQueue<Runnable> blockingQueue = this.getQueue();
             if (blockingQueue instanceof VariableLinkedBlockingQueue) {
                 ((VariableLinkedBlockingQueue<Runnable>) blockingQueue).setCapacity(dtpDesc.getDtpQueue().getCapacity());
                 this.dtpDesc.getDtpQueue().setCapacity(dtpDesc.getDtpQueue().getCapacity());
             } else {
                 log.error("DynamicTp refresh, the blockingqueue capacity cannot be reset, dtpName: {}, queueType {}",
-                        this.getThreadPoolName(), this.dtpDesc.getDtpQueue().getQueueTypeEnum());
+                        this.getThreadPoolName(), this.dtpDesc.getDtpQueue().getQueueType());
             }
         }
         this.dtpDesc.setWaitForTasksToCompleteOnShutdown(dtpDesc.isWaitForTasksToCompleteOnShutdown());

@@ -1,14 +1,14 @@
 package com.luckylau.easy.dynamic.tp.core.thread.queue;
 
 import com.luckylau.easy.dynamic.tp.common.VariableLinkedBlockingQueue;
-import com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum;
+import com.luckylau.easy.dynamic.tp.common.em.QueueType;
 import com.luckylau.easy.dynamic.tp.common.ex.DtpException;
 import com.luckylau.easy.dynamic.tp.common.model.DtpQueue;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.*;
 
-import static com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum.*;
+import static com.luckylau.easy.dynamic.tp.common.em.QueueType.*;
 
 /**
  * @Author luckylau
@@ -18,12 +18,12 @@ import static com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum.*;
 public class QueueHandler {
 
     public static BlockingQueue<Runnable> buildBlockingQueue(DtpQueue queue) {
-        QueueTypeEnum name = queue.getQueueTypeEnum();
+        QueueType name = queue.getQueueType();
         int capacity = queue.getCapacity();
         boolean fair = queue.isFair();
         BlockingQueue<Runnable> blockingQueue = null;
         if (name == ARRAY_BLOCKING_QUEUE) {
-            blockingQueue = new ArrayBlockingQueue<>(capacity);
+            blockingQueue = new ArrayBlockingQueue<>(capacity, fair);
         } else if (name == LINKED_BLOCKING_QUEUE) {
             blockingQueue = new LinkedBlockingQueue<>(capacity);
         } else if (name == PRIORITY_BLOCKING_QUEUE) {

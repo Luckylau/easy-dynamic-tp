@@ -12,7 +12,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import static com.luckylau.easy.dynamic.tp.common.em.RejectedTypeEnum.*;
+import static com.luckylau.easy.dynamic.tp.common.em.RejectedType.*;
 
 /**
  * @Author luckylau

@@ -1,6 +1,6 @@
 package com.luckylau.easy.dynamic.tp.common.model;
 
-import com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum;
+import com.luckylau.easy.dynamic.tp.common.em.QueueType;
 import lombok.Data;
 
 /**
@@ -9,17 +9,28 @@ import lombok.Data;
  */
 @Data
 public class DtpQueue {
-    private QueueTypeEnum queueTypeEnum;
+    private QueueType queueType;
     private int capacity;
     private boolean fair;
 
-    public DtpQueue(QueueTypeEnum queueTypeEnum, int capacity) {
-        this.queueTypeEnum = queueTypeEnum;
+    public DtpQueue(QueueType queueType, int capacity) {
+        this.queueType = queueType;
         this.capacity = capacity;
     }
 
+    public DtpQueue(QueueType queueType) {
+        this.queueType = queueType;
+        this.capacity = Integer.MAX_VALUE;
+    }
+
     public DtpQueue(boolean fair) {
-        this.queueTypeEnum = QueueTypeEnum.SYNCHRONOUS_QUEUE;
+        this.queueType = QueueType.SYNCHRONOUS_QUEUE;
         this.fair = fair;
+    }
+
+    public DtpQueue(int capacity, boolean fair) {
+        this.queueType = QueueType.ARRAY_BLOCKING_QUEUE;
+        this.fair = fair;
+        this.capacity = capacity;
     }
 }

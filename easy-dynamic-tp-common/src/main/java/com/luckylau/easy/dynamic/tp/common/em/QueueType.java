@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2022/5/2
  */
 @Slf4j
-public enum QueueTypeEnum {
+public enum QueueType {
     /**
      * BlockingQueue type.
      */
@@ -30,7 +30,7 @@ public enum QueueTypeEnum {
     private final Integer code;
     private final String name;
 
-    QueueTypeEnum(Integer code, String name) {
+    QueueType(Integer code, String name) {
         this.code = code;
         this.name = name;
     }

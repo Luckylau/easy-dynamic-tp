@@ -78,7 +78,7 @@ public class DtpRegistry implements ApplicationListener<ContextRefreshedEvent>, 
                 diffKeys,
                 String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getCorePoolSize(), dtpDesc.getCorePoolSize()),
                 String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getMaximumPoolSize(), dtpDesc.getMaximumPoolSize()),
-                String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getDtpQueue().getQueueTypeEnum(), dtpDesc.getDtpQueue().getQueueTypeEnum()),
+                String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getDtpQueue().getQueueType(), dtpDesc.getDtpQueue().getQueueType()),
                 String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getDtpQueue().getCapacity(), dtpDesc.getDtpQueue().getCapacity()),
                 String.format(DynamicTpConst.PROPERTIES_CHANGE_SHOW_STYLE, oldDesc.getKeepAliveTime(), dtpDesc.getKeepAliveTime()));
     }
