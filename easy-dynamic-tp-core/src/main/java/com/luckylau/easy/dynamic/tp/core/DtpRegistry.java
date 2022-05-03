@@ -6,7 +6,6 @@ import com.luckylau.easy.dynamic.tp.common.model.DtpDesc;
 import com.luckylau.easy.dynamic.tp.common.util.equator.Equator;
 import com.luckylau.easy.dynamic.tp.common.util.equator.FieldInfo;
 import com.luckylau.easy.dynamic.tp.common.util.equator.GetterBaseEquator;
-import com.luckylau.easy.dynamic.tp.core.thread.DtpExecutor;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

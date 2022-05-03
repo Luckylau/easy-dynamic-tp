@@ -1,17 +1,14 @@
-package com.luckylau.easy.dynamic.tp.core.thread;
+package com.luckylau.easy.dynamic.tp.core;
 
 import com.luckylau.easy.dynamic.tp.common.VariableLinkedBlockingQueue;
-import com.luckylau.easy.dynamic.tp.common.event.RefreshEvent;
 import com.luckylau.easy.dynamic.tp.common.model.DtpDesc;
 import com.luckylau.easy.dynamic.tp.common.model.DtpQueue;
-import com.luckylau.easy.dynamic.tp.core.DtpRegistry;
 import com.luckylau.easy.dynamic.tp.core.thread.queue.QueueHandler;
 import com.luckylau.easy.dynamic.tp.core.thread.reject.RejectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.context.ApplicationListener;
 
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -26,7 +23,7 @@ import static com.luckylau.easy.dynamic.tp.common.em.QueueTypeEnum.VARIABLE_LINK
  * @Date 2022/5/2
  */
 @Slf4j
-public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean, ApplicationListener<RefreshEvent> {
+public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
 
     private DtpDesc dtpDesc;
 
@@ -42,7 +39,7 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean, A
         DtpRegistry.registerDtp(this);
     }
 
-    public DtpDesc getDtpDesc() {
+    protected DtpDesc getDtpDesc() {
         return dtpDesc;
     }
 
@@ -50,7 +47,7 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean, A
         return dtpDesc.getThreadPoolName();
     }
 
-    public void doRefresh(DtpDesc dtpDesc) {
+    protected void doRefresh(DtpDesc dtpDesc) {
         if (!Objects.equals(this.getCorePoolSize(), dtpDesc.getCorePoolSize())) {
             this.setCorePoolSize(dtpDesc.getCorePoolSize());
             this.dtpDesc.setCorePoolSize(dtpDesc.getCorePoolSize());
@@ -106,12 +103,7 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean, A
 
     }
 
-    @Override
-    public void onApplicationEvent(RefreshEvent event) {
-
-    }
-
-    public BeanDefinition toBeanDefinition() {
+    protected BeanDefinition toBeanDefinition() {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DtpExecutor.class);
         beanDefinitionBuilder
                 .addConstructorArgValue(this.dtpDesc.getThreadPoolName())
