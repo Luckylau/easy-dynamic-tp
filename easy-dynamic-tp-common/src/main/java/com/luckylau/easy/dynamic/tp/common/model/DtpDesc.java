@@ -41,6 +41,10 @@ public class DtpDesc {
 
     private String rejectedHandlerType;
 
+    private boolean waitForTasksToCompleteOnShutdown = false;
+
+    private int awaitTerminationSeconds = 0;
+
     public long getKeepAliveTime(TimeUnit unit) {
         return unit.convert(keepAliveTime, TimeUnit.NANOSECONDS);
     }

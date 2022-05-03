@@ -37,7 +37,7 @@ public class DtpRegistry implements ApplicationListener<ContextRefreshedEvent>, 
 
     public static void registerDtp(DtpExecutor executor) {
         log.info("DynamicTp register dtpExecutor, executor: {}",
-                executor.getDtpDesc());
+                executor.dtpDesc);
         DTP_REGISTRY.putIfAbsent(executor.getThreadPoolName(), executor);
     }
 
@@ -68,7 +68,7 @@ public class DtpRegistry implements ApplicationListener<ContextRefreshedEvent>, 
             log.error("DynamicTp refresh, invalid parameters exist, properties: {}", dtpDesc);
             return;
         }
-        DtpDesc oldDesc = executor.getDtpDesc();
+        DtpDesc oldDesc = executor.dtpDesc;
         executor.doRefresh(dtpDesc);
         List<FieldInfo> diffFields = EQUATOR.getDiffFields(oldDesc, dtpDesc);
         List<String> diffKeys = diffFields.stream().map(FieldInfo::getFieldName).collect(toList());
