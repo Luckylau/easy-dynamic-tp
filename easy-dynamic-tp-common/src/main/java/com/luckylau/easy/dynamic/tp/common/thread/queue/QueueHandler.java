@@ -1,4 +1,4 @@
-package com.luckylau.easy.dynamic.tp.core.thread.queue;
+package com.luckylau.easy.dynamic.tp.common.thread.queue;
 
 import com.luckylau.easy.dynamic.tp.common.VariableLinkedBlockingQueue;
 import com.luckylau.easy.dynamic.tp.common.em.QueueType;

@@ -19,20 +19,25 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>com.luckylau</groupId>
-      <artifactId>easy-dynamic-tp-common</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>com.luckylau</groupId>
+          <artifactId>easy-dynamic-tp-common</artifactId>
+      </dependency>
 
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-core</artifactId>
-      <version>1.8.5</version>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
+      <dependency>
+          <groupId>com.luckylau</groupId>
+          <artifactId>easy-dynamic-tp-alert</artifactId>
+      </dependency>
 
-    <dependency>
+      <dependency>
+          <groupId>io.micrometer</groupId>
+          <artifactId>micrometer-core</artifactId>
+          <version>1.8.5</version>
+          <scope>compile</scope>
+          <optional>true</optional>
+      </dependency>
+
+      <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>

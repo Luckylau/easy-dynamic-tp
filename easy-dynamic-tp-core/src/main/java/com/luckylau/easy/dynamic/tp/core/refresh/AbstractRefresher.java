@@ -1,9 +1,9 @@
 package com.luckylau.easy.dynamic.tp.core.refresh;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.luckylau.easy.dynamic.tp.common.DtpRegistry;
 import com.luckylau.easy.dynamic.tp.common.config.DtpChangeConfig;
 import com.luckylau.easy.dynamic.tp.common.event.RefreshEvent;
-import com.luckylau.easy.dynamic.tp.core.DtpRegistry;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ApplicationEventMulticaster;

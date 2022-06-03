@@ -1,10 +1,11 @@
-package com.luckylau.easy.dynamic.tp.core;
+package com.luckylau.easy.dynamic.tp.common;
 
-import com.luckylau.easy.dynamic.tp.common.VariableLinkedBlockingQueue;
+import com.luckylau.easy.dynamic.tp.common.alert.DtpAlertIndicator;
 import com.luckylau.easy.dynamic.tp.common.model.DtpDesc;
 import com.luckylau.easy.dynamic.tp.common.model.DtpQueue;
-import com.luckylau.easy.dynamic.tp.core.thread.queue.QueueHandler;
-import com.luckylau.easy.dynamic.tp.core.thread.reject.RejectHandler;
+import com.luckylau.easy.dynamic.tp.common.thread.DtpRunnable;
+import com.luckylau.easy.dynamic.tp.common.thread.queue.QueueHandler;
+import com.luckylau.easy.dynamic.tp.common.thread.reject.RejectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -24,15 +25,19 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
 
     protected DtpDesc dtpDesc;
 
+    protected DtpAlertIndicator dtpAlertIndicator;
+
     public DtpExecutor(String threadPoolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, DtpQueue dtpQueue) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, QueueHandler.buildBlockingQueue(dtpQueue));
         setDtpDesc(threadPoolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, dtpQueue, this.getRejectedExecutionHandler());
+        setDtpAlertIndicator(threadPoolName);
         DtpRegistry.registerDtp(this);
     }
 
     public DtpExecutor(String threadPoolName, int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, DtpQueue dtpQueue, RejectedExecutionHandler handler) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, QueueHandler.buildBlockingQueue(dtpQueue), handler);
         setDtpDesc(threadPoolName, corePoolSize, maximumPoolSize, keepAliveTime, unit, dtpQueue, this.getRejectedExecutionHandler());
+        setDtpAlertIndicator(threadPoolName);
         DtpRegistry.registerDtp(this);
     }
 
@@ -54,9 +59,9 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
             this.dtpDesc.setCorePoolSize(dtpDesc.getCorePoolSize());
         }
 
-        if (!Objects.equals(this.getMaximumPoolSize(), dtpDesc.getMaximumPoolSize())) {
-            this.setMaximumPoolSize(dtpDesc.getMaximumPoolSize());
-            this.dtpDesc.setMaximumPoolSize(dtpDesc.getMaximumPoolSize());
+        if (!Objects.equals(this.getMaximumPoolSize(), dtpDesc.getMaxPoolSize())) {
+            this.setMaximumPoolSize(dtpDesc.getMaxPoolSize());
+            this.dtpDesc.setMaxPoolSize(dtpDesc.getMaxPoolSize());
         }
 
         if (!Objects.equals(this.getKeepAliveTime(this.dtpDesc.getUnit()), dtpDesc.getKeepAliveTime(this.dtpDesc.getUnit()))) {
@@ -95,15 +100,10 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
         dtpDesc.setThreadPoolName(threadPoolName);
         dtpDesc.setKeepAliveTime(keepAliveTime);
         dtpDesc.setUnit(unit);
-        dtpDesc.setMaximumPoolSize(maximumPoolSize);
+        dtpDesc.setMaxPoolSize(maximumPoolSize);
         dtpDesc.setDtpQueue(workQueue);
         dtpDesc.setRejectedHandlerType(RejectHandler.getRejectedHandlerType(handler));
         this.dtpDesc = dtpDesc;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-        internalShutdown();
     }
 
     protected BeanDefinition toBeanDefinition() {
@@ -111,12 +111,21 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
         beanDefinitionBuilder
                 .addConstructorArgValue(this.dtpDesc.getThreadPoolName())
                 .addConstructorArgValue(this.dtpDesc.getCorePoolSize())
-                .addConstructorArgValue(this.dtpDesc.getMaximumPoolSize())
+                .addConstructorArgValue(this.dtpDesc.getMaxPoolSize())
                 .addConstructorArgValue(this.dtpDesc.getKeepAliveTime())
                 .addConstructorArgValue(this.dtpDesc.getUnit())
                 .addConstructorArgValue(this.dtpDesc.getDtpQueue())
                 .addConstructorArgValue(RejectHandler.getProxy(this.dtpDesc.getRejectedHandlerType()));
         return beanDefinitionBuilder.getBeanDefinition();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        internalShutdown();
+    }
+
+    public DtpDesc getDtpDesc() {
+        return dtpDesc;
     }
 
     private void internalShutdown() {
@@ -130,6 +139,14 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
         }
         awaitTerminationIfNecessary();
 
+    }
+
+    public DtpAlertIndicator getDtpAlertIndicator() {
+        return dtpAlertIndicator;
+    }
+
+    private void setDtpAlertIndicator(String threadPoolName) {
+        this.dtpAlertIndicator = new DtpAlertIndicator(threadPoolName);
     }
 
     private void cancelRemainingTask(Runnable task) {
@@ -155,5 +172,28 @@ public class DtpExecutor extends ThreadPoolExecutor implements DisposableBean {
         }
     }
 
+    @Override
+    protected void beforeExecute(Thread t, Runnable r) {
+        long currTime = System.currentTimeMillis();
+        DtpRunnable runnable = (DtpRunnable) r;
+        runnable.setStartTime(currTime);
 
+        long waitTime = currTime - runnable.getSubmitTime();
+        long queueTimeout = this.dtpDesc.getQueueTimeout();
+        if (queueTimeout > 0 && queueTimeout < waitTime) {
+            this.dtpAlertIndicator.getQueueTimeoutCount().incrementAndGet();
+        }
+        super.beforeExecute(t, r);
+    }
+
+    @Override
+    public void execute(Runnable command) {
+        command = new DtpRunnable(command);
+        super.execute(command);
+    }
+
+    @Override
+    protected void afterExecute(Runnable r, Throwable t) {
+        super.afterExecute(r, t);
+    }
 }

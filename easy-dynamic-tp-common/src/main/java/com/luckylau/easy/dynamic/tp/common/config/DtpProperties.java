@@ -35,4 +35,6 @@ public class DtpProperties {
      */
     private UndertowThreadPool undertowTp;
 
+    private DtpAlert dtpAlert;
+
 }

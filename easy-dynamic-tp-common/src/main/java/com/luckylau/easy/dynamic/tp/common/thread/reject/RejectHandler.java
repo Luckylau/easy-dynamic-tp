@@ -1,4 +1,4 @@
-package com.luckylau.easy.dynamic.tp.core.thread.reject;
+package com.luckylau.easy.dynamic.tp.common.thread.reject;
 
 import com.luckylau.easy.dynamic.tp.common.ex.DtpException;
 import lombok.extern.slf4j.Slf4j;

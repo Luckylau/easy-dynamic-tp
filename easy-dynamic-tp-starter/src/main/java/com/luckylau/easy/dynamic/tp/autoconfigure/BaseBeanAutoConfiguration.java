@@ -1,8 +1,9 @@
 package com.luckylau.easy.dynamic.tp.autoconfigure;
 
+import com.luckylau.easy.dynamic.tp.alert.AlertWorker;
+import com.luckylau.easy.dynamic.tp.common.DtpRegistry;
 import com.luckylau.easy.dynamic.tp.common.config.DtpProperties;
 import com.luckylau.easy.dynamic.tp.common.constant.DynamicTpConst;
-import com.luckylau.easy.dynamic.tp.core.DtpRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,6 +22,12 @@ public class BaseBeanAutoConfiguration {
     @ConditionalOnMissingBean
     public DtpRegistry dtpRegistry() {
         return new DtpRegistry();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public AlertWorker alertWorker() {
+        return new AlertWorker();
     }
 }
 

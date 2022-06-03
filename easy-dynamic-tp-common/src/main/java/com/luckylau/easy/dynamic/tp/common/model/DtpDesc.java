@@ -23,7 +23,7 @@ public class DtpDesc {
     /**
      * MaxSize of ThreadPool.
      */
-    private int maximumPoolSize;
+    private int maxPoolSize;
 
     /**
      * When the number of threads is greater than the core,
@@ -44,6 +44,18 @@ public class DtpDesc {
     private boolean waitForTasksToCompleteOnShutdown = false;
 
     private int awaitTerminationSeconds = 0;
+
+    /**
+     * Task execute timeout, unit (ms), just for statistics.
+     */
+    private long runTimeout;
+
+    /**
+     * Task queue wait timeout, unit (ms), just for statistics.
+     */
+    private long queueTimeout;
+
+    private boolean alertEnabled = true;
 
     public long getKeepAliveTime(TimeUnit unit) {
         return unit.convert(keepAliveTime, TimeUnit.NANOSECONDS);
